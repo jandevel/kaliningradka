@@ -34,7 +34,8 @@ def create_datasets(start_year=1946, end_year=1991):
             continue
 
         # Randomly sample three different issues from the filtered DataFrame
-        selected_issues = filtered_df['filename'].str.slice(0, 10).sample(n=3).values
+        unique_issues = filtered_df['filename'].str.slice(0, 10).drop_duplicates()
+        selected_issues = unique_issues.sample(n=3).values
 
         # Copy the 4 pages of each selected issue to each respective dataset directory
         for dataset, issue in zip(datasets, selected_issues):
